@@ -4,24 +4,19 @@
 def length_of_longest_substring(s)
   chars = s.chars
   n = s.length
-  hash = {}
+  hash = Set.new
   i, j = 0, 0
   max_length = 0
   while i < n && j < n do
-    if hash.has_key?(chars[j])
-      puts chars[i..j].join
-      hash = {}
-      i += 1
-      j = i
+    if !hash.include?(chars[j])
+        hash.add(chars[j])
+        j += 1
+        l = j - i
+        max_length = l if max_length < l
     else
-      hash[chars[j]] = 0
-      l = j - i + 1
-      max_length = l if max_length < l
-      puts chars[i..j].join
-      j += 1
+        hash.delete(chars[i])
+        i += 1
     end
   end
   max_length
 end
-
-puts length_of_longest_substring("pwwkew")
